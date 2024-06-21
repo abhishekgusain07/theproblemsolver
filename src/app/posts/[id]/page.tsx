@@ -1,12 +1,10 @@
 import PostBody from "@/components/post-body";
 import { Suspense } from "react";
 
-const PostPage = async({ 
-    params,
-    title
+const Page = async({ 
+    params
 }:{
-    params: {id: string};
-    title: string;
+    params: {id: string}
 }) => {
     const postid = Number(params.id)
     
@@ -18,4 +16,4 @@ const PostPage = async({
         </main>
     )
 }
-export default PostPage;
+export default Page;
