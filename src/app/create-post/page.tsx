@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { createPost } from "../../actions/actions"
-const CreatePost = () => {
+
+const CreatePost = async () => {
     return (
         <main className="text-center pt-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-5">Create Post</h1>
             <form
                 action={createPost} 
-                className="h-10 space-x-2 mt-10">
+                className="h-10 flex flex-col space-x-2 mt-10">
                 <input
                     className="border rounded px-3 h-full"
                     type="text" 
