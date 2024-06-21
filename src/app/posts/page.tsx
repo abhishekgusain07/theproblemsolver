@@ -1,22 +1,14 @@
-import Link from "next/link";
-import { useEffect } from "react";
+import PostList from "@/components/post-list";
+import { Suspense, useEffect } from "react";
 
 const Page = async() => {
-    const response = await fetch("https://dummyjson.com/posts?limit=10")
-    const data = await response.json()
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    
     return <main className="text-center pt-16 px-5">
         <h1 className="text-4xl md:text-5xl font-bold mb-5"> Logs </h1>
-        <ul>
-            <li className="max-w-[700px] mx-auto">
-                {
-                    data.posts.map(post => (
-                        <li className="mb-3" key={post.id}>
-                            <Link href={`/posts/${post.id}`}>{post.title}</Link>
-                        </li>
-                    ))
-                }
-            </li>
-        </ul>
+        <Suspense fallback = "...loading">
+            <PostList />
+        </Suspense>
     </main>
 }
 export default Page;
