@@ -7,7 +7,7 @@ import { Trash } from 'lucide-react';
 const TrashIcon = ({postId}:{postId:number}) => {
   return (
     <Trash
-      className="cursor-pointer transition-transform duration-100 active:scale-90"
+      className="cursor-pointer size-5 transition-transform duration-200 active:scale-90"
       onClick={() => deletePost(postId)}
     />
   );
