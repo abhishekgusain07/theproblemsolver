@@ -1,6 +1,4 @@
-import { deletePost } from "@/actions/actions";
 import prisma from "@/lib/db";
-import { Trash } from "lucide-react";
 import Link from "next/link";
 import TrashIcon from "./TrashIcon";
 const PostList = async() => {

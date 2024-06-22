@@ -1,6 +1,6 @@
 import { createPost } from "@/actions/actions";
 
-export default function Form() {
+export default async function Form() {
     return (
         <form
           action={createPost}

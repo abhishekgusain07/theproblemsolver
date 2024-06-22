@@ -1,5 +1,5 @@
 import PostList from "@/components/post-list";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 
 const Page = async() => {
     return <main className="text-center pt-16 px-5">
