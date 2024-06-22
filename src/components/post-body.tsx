@@ -1,9 +1,15 @@
-import { Button } from "./ui/button";
-import UpvoteBtn from "./upvote-btn";
+import NotFound from "@/app/posts/[id]/not-found";
+import prisma from "@/lib/db";
 
 const PostBody = async({postId}:{postId: number}) => {
-    const response = await fetch(`https://dummyjson.com/posts/${postId}`)
-    const post = await  response.json();
+    const post = await prisma.post.findUnique({
+        where: {
+            id: Number(postId)
+        }
+    })
+    if(!post) {
+        return <NotFound />
+    }
     return (
         <>
             <h1 className="text-5xl font-semibold mb-7">{post.title}</h1>

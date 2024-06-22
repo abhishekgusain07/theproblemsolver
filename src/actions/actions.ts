@@ -1,4 +1,5 @@
 "use server"
+import prisma from "@/lib/db";
 import { z } from "zod";
 
 const postSchema = z.object({
@@ -16,5 +17,13 @@ export async function createPost(formData: FormData) {
         console.log(result.error.issues)
         return { error: result.error.issues };
     }
-    console.log(title, body);    
+
+    //adding data to databse
+    await prisma.post.create({
+        data: {
+            title, 
+            body
+        }
+    })
+    console.log("post created");    
 }
