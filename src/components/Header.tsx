@@ -1,4 +1,5 @@
 "use client";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,6 +43,12 @@ const Header = () => {
                             </li>
                         })
                     }
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
+                        <SignInButton/>
+                    </SignedOut>
                 </ul>
             </nav>
         </header>
