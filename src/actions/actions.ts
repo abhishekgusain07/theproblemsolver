@@ -40,7 +40,7 @@ export async function createPost(formData: FormData) {
     // revalidate the cache
     // everytime a new post is created, the posts page will get re-rendered immediately to reflect the changes
     revalidatePath("/posts")
-
+    redirect('/posts')
 
     console.log("post created");    
 }
