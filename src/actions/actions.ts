@@ -1,5 +1,6 @@
 "use server"
 import prisma from "@/lib/db";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const postSchema = z.object({
@@ -25,5 +26,11 @@ export async function createPost(formData: FormData) {
             body
         }
     })
+
+    // revalidate the cache
+    // everytime a new post is created, the posts page will get re-rendered immediately to reflect the changes
+    revalidatePath("/posts")
+
+
     console.log("post created");    
 }
