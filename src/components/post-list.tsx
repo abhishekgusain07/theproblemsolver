@@ -1,24 +1,20 @@
+import { deletePost } from "@/actions/actions";
 import prisma from "@/lib/db";
+import { Trash } from "lucide-react";
 import Link from "next/link";
-
-interface Post {
-    id: number;
-    title: string;
-    body: string;
-}
+import TrashIcon from "./TrashIcon";
 const PostList = async() => {
     const posts = await prisma.post.findMany()
     return (
-        <ul>
-            <li className="max-w-[700px] mx-auto">
-                {
-                    posts.map((post) => (
-                        <li className="mb-3" key={post.id}>
-                            <Link href={`/posts/${post.id}`}>{post.title}</Link>
-                        </li>
-                    ))
-                }
-            </li>
+        <ul className="max-w-[700px] mx-auto">
+            {posts.map((post) => (
+                <li className="mb-3" key={post.id}>
+                    <div className="flex flex-row justify-between items-center space-x-3 mx-auto">
+                        <Link href={`/posts/${post.id}`}>{post.title}</Link>
+                        <TrashIcon postId={post.id} />
+                    </div>
+                </li>
+            ))}
         </ul>
     )
 }
