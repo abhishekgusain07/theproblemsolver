@@ -1,7 +1,6 @@
 'use client';
-import { SquarePen } from 'lucide-react';
-import { redirect, useRouter} from 'next/navigation';
-
+import { SquarePen } from 'lucide-react'
+import { redirect, useRouter} from 'next/navigation'
 
 const UpdateIcon = ({postId}:{postId:number}) => {
     const router = useRouter()
