@@ -1,5 +1,4 @@
 import ExternalLink from "@/components/ExternalLink";
-import Image from "next/image";
 
 export default function Home() {
   return (

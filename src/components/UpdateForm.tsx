@@ -19,7 +19,6 @@ export default async function UpdateForm({postId}:{postId: number}) {
             onSubmit={handleSubmit}
             className="flex flex-col max-w-[400px] mx-auto gap-2 my-10"
           >
-            <h1>{postId}</h1>
             <input
               type="text"
               name="title"
