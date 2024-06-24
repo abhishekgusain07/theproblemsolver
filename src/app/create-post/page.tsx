@@ -10,4 +10,4 @@ const CreatePost = async () => {
         </main>
     )
 }
-export default CreatePost;
+export default CreatePost
