@@ -1,6 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { createUser, getUserById } from '@/components/dbFunctions/Users'
 
 export async function POST(req: Request) {
 
@@ -51,8 +52,40 @@ export async function POST(req: Request) {
   // For this guide, you simply log the payload to the console
   const { id } = evt.data;
   const eventType = evt.type;
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-  console.log('Webhook body:', body)
 
-  return new Response('', { status: 200 })
+  // //for logging, delete later
+  // console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
+  // console.log('Webhook body:', body)
+  // //---------------------------------
+
+  if(eventType === 'user.created') {
+    const {id, email_addresses, first_name} = evt.data
+    if(!id || !email_addresses || email_addresses.length === 0) {
+      return new Response(`Error occured -- missing data`, {
+        status: 400
+      })
+    }
+    const user = {
+      clerkUserId: id,
+      email: email_addresses[0].email_address,
+      name: first_name || undefined
+    }
+    try {
+      await createUser(user);
+        return new Response('User created successfully', {
+        status: 200
+      });
+    }catch(error) {
+      console.error('Error creating user:', error);
+      return new Response('Error occurred while creating user', {
+        status: 500
+      });
+    }
+  }else if(eventType === 'user.updated') {
+    // Todo:
+    return new Response(`testing route`, {status: 203})
+  } else if(eventType === 'user.deleted') {
+    // Todo:
+    return new Response(`testing route`, {status: 203})
+  }
 }
