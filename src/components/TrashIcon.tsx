@@ -1,14 +1,31 @@
 'use client';
 
 import { deletePost } from '@/actions/actions';
+import { cn } from '@/lib/utils';
+import { useUser } from '@clerk/nextjs';
 import { Trash } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
+const TrashIcon = ({ postId }:{postId: number}) => {
+  const { user } = useUser();
+  const [isAdmin, setIsAdmin] = useState(false);
 
-const TrashIcon = ({postId}:{postId:number}) => {
+  useEffect(() => {
+    if (user?.primaryEmailAddress?.emailAddress === 'abhishek.gusain1007fb@gmail.com') {
+      setIsAdmin(true);
+    }
+  }, [user]);
+
+  const handleActionAccordingToUser = () => {
+    if (isAdmin) {
+      deletePost(postId);
+    }
+  };
+
   return (
     <Trash
-      className="cursor-pointer size-5 transition-transform duration-200 active:scale-90"
-      onClick={() => deletePost(postId)}
+      className={cn("cursor-pointer size-5 transition-transform duration-200 active:scale-90", isAdmin ? '' : 'hidden')}
+      onClick={handleActionAccordingToUser}
     />
   );
 };

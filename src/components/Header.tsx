@@ -1,8 +1,9 @@
 "use client";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const navLinks = [
     {
@@ -12,15 +13,31 @@ const navLinks = [
     {
         href: "/posts",
         label: "Posts"
-    },
-    {
-        href: '/create-post',
-        label: "Create Post"
     }
 ]
+export interface link {
+    href: string
+    label: string
+}
+const adminLinks = {
+    href: '/create-post',
+    label: "Create Post"
+}
 const Header = () => {
 
     const pathName = usePathname()
+    const {user} = useUser();
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [updatedNavLinks,setUpdatedNavLinks] = useState<link[]>(navLinks)
+    useEffect(() => {
+      if (user?.primaryEmailAddress?.emailAddress === 'abhishek.gusain1007fb@gmail.com') {
+        setIsAdmin(true);
+        setUpdatedNavLinks([...navLinks, adminLinks])
+      }else {
+        setUpdatedNavLinks(navLinks)
+        setIsAdmin(false)
+      }
+    }, [user]);
     return (
         <header className="flex justify-between items-center py-4 px-7 border-b">
             <Link href="/">
@@ -35,7 +52,7 @@ const Header = () => {
             <nav>
                 <ul className="flex gap-x-5 text-[14px]">
                     {
-                        navLinks.map((link) => {
+                        updatedNavLinks.map((link) => {
                             return <li key={link.href}>
                                 <Link  className={`${pathName === link.href ? "text-zinc-900" : "text-zinc-400 "}`} href={link.href}>
                                     {link.label}
