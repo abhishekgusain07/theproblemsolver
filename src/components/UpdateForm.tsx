@@ -1,6 +1,4 @@
-"use client"
 import {  updatePost } from "@/actions/actions";
-import prisma from "@/lib/db";
 import React, { Suspense } from "react";
 import { getPostById } from "./dbFunctions/getPostById";
 import { Post } from "@/lib/types/types";

@@ -8,7 +8,7 @@ const PostList = async() => {
     return (
         <ul className="max-w-[700px] mx-auto">
             {posts.map((post) => (
-                <SinglePost post={post} />
+                <SinglePost key={post.id} post={post} />
             ))}
         </ul>
     )
