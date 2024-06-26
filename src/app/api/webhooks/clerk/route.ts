@@ -1,7 +1,8 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
-import { createUser, getUserById } from '@/components/dbFunctions/Users'
+import { createUser, deleteUser, getUserById, updateUser } from '@/components/dbFunctions/Users'
+import { User } from '@/lib/types/types'
 
 export async function POST(req: Request) {
 
@@ -83,9 +84,55 @@ export async function POST(req: Request) {
     }
   }else if(eventType === 'user.updated') {
     // Todo:
-    return new Response(`testing route`, {status: 203})
+    const {id, email_addresses, first_name} = evt.data
+    if(!id || !email_addresses || email_addresses.length === 0) {
+      return new Response(`Error occured -- missing data`, {
+        status: 400
+      })
+    }
+
+    const userUpdate = {
+      clerkUserId: id,
+      email: email_addresses[0].email_address,
+      name: first_name || undefined
+    }
+
+    try{
+      // finding the existing user by clerkId
+      const existingUser = await getUserById({clerkUserId: userUpdate.clerkUserId})
+      
+      if(!existingUser) {
+        throw new Error (`user with clerkUserId ${userUpdate.clerkUserId} not found`)
+      }
+      const updatedUserData: Partial<User> = {}
+      if(userUpdate.email) {
+        updatedUserData.email = userUpdate.email
+      }
+      if(userUpdate.name !== undefined) {
+        updatedUserData.name = updateUser.name
+      }
+      const updatedUser = await updateUser({clerkUserId: userUpdate.clerkUserId, data: updatedUserData})
+      
+      return new Response(`User with ID ${ updatedUser.id} updated successfully`, {
+        status: 200,
+    });
+    }catch(error) {
+      console.log(`Error update user: `, error)
+      return new Response(`Error Updating user`,{status: 500})
+    }
   } else if(eventType === 'user.deleted') {
-    // Todo:
-    return new Response(`testing route`, {status: 203})
+    const { id } = evt.data
+    if(!id ) {
+      return new Response(`Error occured -- missing data`, {
+        status: 400
+      })
+    }
+    try{
+      const user = deleteUser({clerkUserId: id})
+      return new Response(`User with clerkUserId: ${id} deleted`)
+    }catch(error) {
+      console.log(`Error Deleting user: `, error)
+      return new Response(`Error Deleting user`,{status: 500})
+    }
   }
 }

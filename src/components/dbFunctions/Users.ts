@@ -98,3 +98,18 @@ export async function updateUser({id,clerkUserId, data}:{
 
     return user;
 }
+export async function deleteUser({id, clerkUserId}:{
+    id?: number;
+    clerkUserId?: string
+}) {
+    if(!id && !clerkUserId){
+        throw new Error('Either id or clerkUserId must be provided')
+    }
+    const user = await prisma.user.delete({
+        where: {
+            id: id ?? undefined,
+            clerkUserId: clerkUserId ?? undefined
+        }
+    })
+    return user
+}
