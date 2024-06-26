@@ -11,7 +11,7 @@ const TrashIcon = ({ postId }:{postId: number}) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    if (user?.primaryEmailAddress?.emailAddress === 'abhishek.gusain1007fb@gmail.com') {
+    if (user?.primaryEmailAddress?.emailAddress === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
       setIsAdmin(true);
     }
   }, [user]);

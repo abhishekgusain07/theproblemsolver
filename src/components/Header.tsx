@@ -27,16 +27,19 @@ const Header = () => {
 
     const pathName = usePathname()
     const {user} = useUser();
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [updatedNavLinks,setUpdatedNavLinks] = useState<link[]>(navLinks)
     useEffect(() => {
-      if (user?.primaryEmailAddress?.emailAddress === 'abhishek.gusain1007fb@gmail.com') {
-        setIsAdmin(true);
-        setUpdatedNavLinks([...navLinks, adminLinks])
-      }else {
-        setUpdatedNavLinks(navLinks)
-        setIsAdmin(false)
-      }
+        const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.trim()?.toLowerCase();
+        const userEmail = user?.emailAddresses[0]?.emailAddress?.trim()?.toLowerCase();
+
+        if (userEmail === adminEmail) {
+            setUpdatedNavLinks([...navLinks, adminLinks]);
+            setIsAdmin(true);
+        } else {
+            setUpdatedNavLinks(navLinks);
+            setIsAdmin(false)
+        }
     }, [user]);
     return (
         <header className="flex justify-between items-center py-4 px-7 border-b">

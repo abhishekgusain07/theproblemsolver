@@ -10,8 +10,9 @@ const UpdateIcon = ({postId}:{postId:number}) => {
     const { user } = useUser()
     const [isAdmin, setIsAdmin] = useState<boolean>(false)
     useEffect(() => {
-        if (user?.primaryEmailAddress?.emailAddress === 'abhishek.gusain1007fb@gmail.com') {
+        if (user?.primaryEmailAddress?.emailAddress === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
             setIsAdmin(true);
+            console.log('is it even coming inside')
         }
     }, [user])
     const handleActionAccordingToUser = () => {
@@ -22,7 +23,7 @@ const UpdateIcon = ({postId}:{postId:number}) => {
     return (
         <SquarePen
         className={cn("cursor-pointer size-5 transition-transform duration-200 active:scale-90",isAdmin ? '' : 'hidden')}
-        onClick={handleActionAccordingToUser}
+        onClick={() =>handleActionAccordingToUser}
         />
     );
 };

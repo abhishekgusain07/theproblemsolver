@@ -1,10 +1,17 @@
 import prisma from "@/lib/db";
 import Link from "next/link";
-import TrashIcon from "./TrashIcon";
-import UpdateIcon from "./UpdateIcon";
+import TrashIcon from "./icons/TrashIcon";
+import UpdateIcon from "./icons/UpdateIcon";
 import SinglePost from "./SinglePost";
+import { PostWithCounts } from "@/lib/types/types";
 const PostList = async() => {
-    const posts = await prisma.post.findMany()
+    const posts: PostWithCounts[] = await prisma.post.findMany({
+        include: {
+            _count: {
+                select: {likes: true, comments: true},
+            },
+        },
+    })
     return (
         <ul className="max-w-[700px] mx-auto">
             {posts.map((post) => (

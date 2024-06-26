@@ -5,3 +5,9 @@ export interface Post {
     createdAt: Date;
     updatedAt: Date;
 }
+export interface PostWithCounts extends Post { 
+    _count: {
+        likes: number;
+        comments: number;
+    }
+}
