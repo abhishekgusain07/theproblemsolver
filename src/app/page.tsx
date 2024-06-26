@@ -9,11 +9,11 @@ export default function Home() {
       </p>
       <div className="fixed bottom-20 inset-x-0 flex justify-center items-center gap-x-2">
         <ExternalLink 
-        href="https://instagram.com/abhishek_gusain_07"
+        href="https://github.com/abhishekgusain07"
         imagePath="/github.svg" 
         altText="github icon" />
         <ExternalLink 
-        href="https://github.com/abhishekgusain07" imagePath = "/insta.svg" 
+        href="https://instagram.com/abhishek_gusain_07" imagePath = "/insta.svg" 
         altText="insta icon"/>
       </div>
     </main>
