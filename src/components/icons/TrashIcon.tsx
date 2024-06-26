@@ -25,7 +25,7 @@ const TrashIcon = ({ postId }:{postId: number}) => {
   return (
     <Trash
       className={cn("cursor-pointer size-5 transition-transform duration-200 active:scale-90", isAdmin ? '' : 'hidden')}
-      onClick={handleActionAccordingToUser}
+      onClick={(handleActionAccordingToUser)}
     />
   );
 };

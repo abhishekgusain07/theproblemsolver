@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
-  likes    Like[]
-  comments Comment[]
+  id           Int       @id @default(autoincrement())
+  clerkUserId  String
+  email        String    @unique
+  name         String?
+  likes        Like[]
+  comments     Comment[]
 }
 
 model Post {

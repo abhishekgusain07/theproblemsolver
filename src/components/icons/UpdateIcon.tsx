@@ -15,15 +15,11 @@ const UpdateIcon = ({postId}:{postId:number}) => {
             console.log('is it even coming inside')
         }
     }, [user])
-    const handleActionAccordingToUser = () => {
-        if(isAdmin) {
-            router.replace(`/posts/update/${postId}`)
-        }
-    }
+    
     return (
         <SquarePen
         className={cn("cursor-pointer size-5 transition-transform duration-200 active:scale-90",isAdmin ? '' : 'hidden')}
-        onClick={() =>handleActionAccordingToUser}
+        onClick={() =>router.replace(`/posts/update/${postId}`)}
         />
     );
 };
