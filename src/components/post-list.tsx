@@ -5,7 +5,7 @@ import UpdateIcon from "./icons/UpdateIcon";
 import SinglePost from "./SinglePost";
 import { PostWithCounts } from "@/lib/types/types";
 const PostList = async() => {
-    const posts: PostWithCounts[] = await prisma.post.findMany({
+    const posts: PostWithCounts[]= await prisma.post.findMany({
         include: {
             _count: {
                 select: {likes: true, comments: true},
