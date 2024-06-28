@@ -33,7 +33,7 @@ const LikeClientComponent = ({postId, posts}:{postId: number; posts: PostWithCou
         fetchUserLiked()
     },[postId, user])
     return (
-        <div className="flex justify-center items-center flex-row gap-x-2">
+        <div className="flex justify-center items-center flex-row gap-x-1">
             {
                 userLiked ? (
                     <AiFillLike 

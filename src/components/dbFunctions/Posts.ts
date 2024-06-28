@@ -1,7 +1,7 @@
 "use server"
 
 import prisma from "@/lib/db";
-import { PostWithCounts } from "@/lib/types/types";
+import { CommentType, PostWithCounts } from "@/lib/types/types";
 import { revalidatePath } from "next/cache";
 
 export const likePost = async({
@@ -77,3 +77,48 @@ export const postWithLikeAndCommentCount = async ({
       throw new Error("Failed to fetch post with counts");
     }
   };
+
+export async function getCommentsByPostId({postId}:{
+    postId: number
+  }):Promise<CommentType[] | null>{
+    try {
+      const comments = await prisma.comment.findMany({
+        where: {
+          postId: postId
+        },
+        include: {
+          user: true, 
+          post: true 
+        }
+      })
+      return  comments as CommentType[]
+    } catch (error) {
+      console.error(error)
+      return []
+    }
+  }
+
+export async function getPostWithLikeAndCommentsCount({postId}:{
+  postId: number
+}):Promise<PostWithCounts[]>{
+  const posts: PostWithCounts[]= await prisma.post.findMany({
+    include: {
+        _count: {
+            select: {likes: true, comments: true},
+        },
+    },
+  })
+  return posts as PostWithCounts[]
+}
+//TODO-29//
+// export const postComment = async({
+//   postId, 
+//   clerkUserId,
+//   body
+// }:{
+//   postId: number;
+//   clerkUserId: string;
+//   body: string
+// }):Promise<CommentType | null> => {
+  
+// }

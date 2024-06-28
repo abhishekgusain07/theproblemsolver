@@ -21,6 +21,27 @@ export interface Like {
     post?: Post
 }
 
+export interface CommentType {
+    id: number
+    body: string
+    createdAt: Date
+    updatedAt: Date
+    userId: number
+    postId: number
+    user: {
+      id: number
+      clerkUserId: string
+      email: string
+      name?: string | null
+    }
+    post: {
+      id: number
+      title: string
+      body: string
+      createdAt: Date
+      updatedAt: Date
+    }
+}
 export interface Comment {
     id?: number; // Optional because it will be generated automatically
     body: string;

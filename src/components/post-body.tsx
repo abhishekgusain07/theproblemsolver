@@ -1,13 +1,17 @@
 import NotFound from "@/app/posts/[id]/not-found";
 import prisma from "@/lib/db";
 import LikeClientComponent from "./LikeClientComponent";
-import { PostWithCounts } from "@/lib/types/types";
+import { CommentType, PostWithCounts } from "@/lib/types/types";
 import { poppins } from "@/app/fonts";
 import { cn } from "@/lib/utils";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import Comments from "./Comments";
+import { getCommentsByPostId, getPostWithLikeAndCommentsCount, postWithLikeAndCommentCount } from "./dbFunctions/Posts";
+import CommentIcon from "./icons/CommentIcon";
+import CommentClient from "./CommentClient";
+
 
 const PostBody = async({postId}:{postId: number}) => {
     const post = await prisma.post.findUnique({
@@ -28,7 +32,8 @@ const PostBody = async({postId}:{postId: number}) => {
           },
         },
     });
-    
+    const comments:CommentType[]|null = await getCommentsByPostId({postId: postId})
+    const postWithCount: PostWithCounts | null = await postWithLikeAndCommentCount({postId: postId})
     if(!post) {
         return <NotFound />
     }
@@ -36,7 +41,10 @@ const PostBody = async({postId}:{postId: number}) => {
       <div className="flex flex-col gap-y-10 min-h-screen">
         <div>
             <h1 className="text-5xl font-semibold mb-7">{post.title}</h1>
-            <LikeClientComponent postId={postId} posts={postWithCounts} />
+            <div className="flex flex-row items-center gap-x-3 justify-center">
+              <LikeClientComponent postId={postId} posts={postWithCounts} />
+              <CommentIcon comments={postWithCount?._count.comments!}/> 
+            </div>
         </div>
         <div className="flex justify-center text-center text-lg font-medium h-full w-full">
             <p className="w-full mx-auto">
@@ -46,14 +54,12 @@ const PostBody = async({postId}:{postId: number}) => {
             </p>
         </div>
         <Separator className="my-4 text-gray-900" />
-        <div className="flex justify-center items-end w-full">
-            <div className="grid w-[300px] gap-2">
-                <Textarea placeholder="Type your message here." />
-                <Button>Send message</Button>
-            </div>
+        <div className="flex justify-center items-end w-full mb-14">
+            {/* comment client component */}
+            <CommentClient postId={postId} body={post.body}/>
         </div>
         <div className="mt-4 mb-2 flex flex-col gap-y-2 justify-center items-center">
-          <Comments postId={postId}/>
+          <Comments comments={comments} postId={postId}/>
         </div>
       </div>
     )
