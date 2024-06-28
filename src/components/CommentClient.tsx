@@ -4,8 +4,8 @@ import { useState } from "react"
 import { Button } from "./ui/button"
 import { Textarea } from "./ui/textarea"
 import { useUser } from "@clerk/nextjs"
-import { toast } from "./ui/use-toast"
-import { ToastAction } from "@radix-ui/react-toast"
+import { useToast } from "./ui/use-toast"
+import { postComment } from "./dbFunctions/Posts"
 
 const CommentClient = ({
     body,
@@ -15,6 +15,7 @@ const CommentClient = ({
     body: string
 }) => {
     const [comment, setComment] = useState<string>("")
+    const {toast} = useToast()
     const {user} = useUser()
     const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(event.target.value)
@@ -25,11 +26,15 @@ const CommentClient = ({
                 variant: "destructive",
                 title: "comment cannot be empty",
                 description: "There was a problem with your request.",
-              })
+            })
         }
         if (user) {
             try {
                 await postComment({ postId: postId, clerkUserId: user.id, body: comment })
+                toast({
+                    variant: "default",
+                    title: "Commented",
+                })
                 setComment("")
             } catch (error) {
                 console.error("Failed to post comment:", error)

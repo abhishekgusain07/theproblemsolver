@@ -110,15 +110,37 @@ export async function getPostWithLikeAndCommentsCount({postId}:{
   })
   return posts as PostWithCounts[]
 }
+
 //TODO-29//
-// export const postComment = async({
-//   postId, 
-//   clerkUserId,
-//   body
-// }:{
-//   postId: number;
-//   clerkUserId: string;
-//   body: string
-// }):Promise<CommentType | null> => {
-  
-// }
+export const postComment = async({
+  postId, 
+  clerkUserId,
+  body
+}:{
+  postId: number;
+  clerkUserId: string;
+  body: string
+}):Promise<CommentType|null> => {
+    try{
+      const user = await prisma.user.findUnique({
+        where:{clerkUserId: clerkUserId}
+      })
+      if(!user)throw new Error(`User not found`)
+      const comment = await prisma.comment.create({
+        data:{
+          postId: postId,
+          userId: user.id,
+          body: body
+        },
+        include: {
+          user: true,
+          post: true
+        }
+      })
+      revalidatePath(`/posts/${postId}`)
+      return comment as CommentType;
+    }catch(error) {
+      console.log(error)
+      throw new Error(`Failed to post comment`)
+    }
+}
