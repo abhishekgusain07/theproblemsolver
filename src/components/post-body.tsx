@@ -4,11 +4,9 @@ import LikeClientComponent from "./LikeClientComponent";
 import { CommentType, PostWithCounts } from "@/lib/types/types";
 import { poppins } from "@/app/fonts";
 import { cn } from "@/lib/utils";
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import Comments from "./Comments";
-import { getCommentsByPostId, getPostWithLikeAndCommentsCount, postWithLikeAndCommentCount } from "./dbFunctions/Posts";
+import { getCommentsByPostId, postWithLikeAndCommentCount } from "./dbFunctions/Posts";
 import CommentIcon from "./icons/CommentIcon";
 import CommentClient from "./CommentClient";
 
