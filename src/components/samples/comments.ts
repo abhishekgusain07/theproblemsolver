@@ -1,4 +1,6 @@
-const sampleComments: CommentType[] = [
+import { CommentType } from "@/lib/types/types";
+
+export const sampleComments: CommentType[] = [
     {
       id: 1,
       body: "This is a great post!",

@@ -54,11 +54,11 @@ const PostBody = async({postId}:{postId: number}) => {
             </p>
         </div>
         <Separator className="my-4 text-gray-900" />
-        <div className="flex justify-center items-end w-full mb-14">
+        <div className="flex justify-center items-end w-full mt-10">
             {/* comment client component */}
             <CommentClient postId={postId} body={post.body}/>
         </div>
-        <div className="mt-4 mb-2 flex flex-col gap-y-2 justify-center items-center">
+        <div className="mt-2 mb-2 flex flex-col gap-y-2 justify-center items-center">
           <Comments comments={comments} postId={postId}/>
         </div>
       </div>

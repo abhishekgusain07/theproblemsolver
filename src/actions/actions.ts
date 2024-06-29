@@ -12,7 +12,7 @@ const postSchema = z.object({
 export async function createPost(formData: FormData) {
 
     // auth check to protect unauthorized person from hitting the route
-    const {has} = auth()
+    const { has } = auth()
     if(!has) {
         redirect('/sign-in')
     }
@@ -32,7 +32,7 @@ export async function createPost(formData: FormData) {
     await prisma.post.create({
         data: {
             title, 
-            body
+            body,
         }
     })
 

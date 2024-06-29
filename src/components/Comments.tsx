@@ -1,7 +1,4 @@
 import { CommentType } from "@/lib/types/types";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import CommentCard from "./CommentCard";
 
 
@@ -27,7 +24,7 @@ const Comments = ({
                   <h2 className="text-center text-2xl font-bold tracking-tight md:text-3xl">Comments</h2>
                   {
                     comments.map((comment) => (
-                      <div className="w-[300px]">
+                      <div key={comment.id} className="w-[300px]">
                         <CommentCard comment={comment} />
                       </div>
                     ))

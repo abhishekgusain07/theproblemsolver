@@ -43,7 +43,12 @@ const CommentClient = ({
             alert("Can't comment, user not logged in")
         }
     }
-    if(!user)return <>Can't comment,user not logged in</>
+    if(!user)
+        return( 
+        <>
+            <h1 className="text-center font-semibold text-2xl text-muted-foreground">Login to Comment</h1>
+        </>
+    )
     return (
         <div className="grid w-[300px] gap-2">
             <Textarea 
