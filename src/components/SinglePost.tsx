@@ -64,8 +64,8 @@ const SinglePost = ({post}: {post: PostWithCounts}) => {
                 <p className="text-muted-foreground text-sm tracking-tight">{postDate}</p>
                 <div className="flex flex-row justify-center items-center gap-x-2">
                     {
-                        post?.flairs?.map(flair => (
-                            <div className="bg-black text-gray-200 rounded-full text-sm pl-2 pr-2">{flair}</div>       
+                        post?.flairs?.map((idx,flair) => (
+                            <div key={idx}className="bg-black text-gray-200 rounded-full text-sm pl-2 pr-2">{flair}</div>       
                         ))
                     }   
                 </div>  
