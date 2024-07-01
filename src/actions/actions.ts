@@ -8,6 +8,7 @@ import { z } from "zod";
 const postSchema = z.object({
     title: z.string().min(5, "Title is required").max(30),
     body: z.string().min(10, "Body is required").max(500),
+    flairs: z.string().optional(),
 });
 export async function createPost(formData: FormData) {
 
@@ -19,6 +20,8 @@ export async function createPost(formData: FormData) {
 
     const title = formData.get('title') as string;
     const body = formData.get('body') as string;
+    const flairs = formData.get('flairs') as string;
+
 
     //zod validation
     const result = postSchema.safeParse({title, body});
@@ -28,11 +31,13 @@ export async function createPost(formData: FormData) {
         return { error: result.error.issues };
     }
 
+    const flairsArray = flairs ? flairs.split(',').map(flair => flair.trim()) : [];
     //adding data to databse
     await prisma.post.create({
         data: {
             title, 
             body,
+            flairs: flairsArray
         }
     })
 
@@ -88,6 +93,7 @@ export async function updatePost(postId: number, formData: FormData) {
 
     const title = formData.get('title') as string;
     const body = formData.get('body') as  string;
+    const flairs = formData.get('flairs') as string;
 
     //zod validation
     const result = postSchema.safeParse({ title, body })
@@ -108,13 +114,16 @@ export async function updatePost(postId: number, formData: FormData) {
           console.log(`Post with id ${postId} not found`);
           return { error: `Post with id ${postId} not found` };
         }
-    
+        
+        const flairArray = flairs ? flairs.split(',').map(flair => flair.trim()) : []
+        
         // Update the post in the database
         await prisma.post.update({
           where: { id: postId },
           data: {
             title,
             body,
+            flairs: flairArray
           },
         });
     

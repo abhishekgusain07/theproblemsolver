@@ -11,9 +11,12 @@ const PostList = async() => {
                 select: {likes: true, comments: true},
             },
         },
+        orderBy: {
+            createdAt: 'desc'
+        }
     })
     return (
-        <ul className="max-w-[700px] mx-auto">
+        <ul className="max-w-[700px] mx-auto flex flex-col gap-y-4">
             {posts.map((post) => (
                 <SinglePost key={post.id} post={post} />
             ))}

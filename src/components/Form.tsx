@@ -20,6 +20,12 @@ export default async function Form() {
             rows={6}
             required
           />
+          <input
+            type="text"
+            name="flairs"
+            placeholder="Enter flairs, separated by commas"
+            className="border rounded px-3 h-10"
+          />
           <button className="h-10 bg-blue-500 px-5 rounded text-white">
             Submit
           </button>

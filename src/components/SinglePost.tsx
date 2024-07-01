@@ -41,7 +41,7 @@ const SinglePost = ({post}: {post: PostWithCounts}) => {
     console.log('-'+post.createdAt+'-')
     const postDate = convertDate(post.createdAt)
     return (
-        <li className="mb-3 flex flex-col" key={post.id}>
+        <li className="mb-3 flex flex-col gap-y-2" key={post.id}>
             <div className="flex flex-row text-center justify-between items-center">
                 <Link href={`/posts/${post.id}`} className="text-lg font-semibold">{post.title}</Link>
                 <div>
@@ -60,8 +60,15 @@ const SinglePost = ({post}: {post: PostWithCounts}) => {
                     }
                 </div>
             </div>
-            <div className="flex flex-row items-start -mt-1">
-                <p className="text-muted-foreground text-[13px] tracking-tight">{postDate}</p>
+            <div className="flex flex-row items-start -mt-1 gap-x-3 justify-start">
+                <p className="text-muted-foreground text-sm tracking-tight">{postDate}</p>
+                <div className="flex flex-row justify-center items-center gap-x-2">
+                    {
+                        post?.flairs?.map(flair => (
+                            <div className="bg-black text-gray-200 rounded-full text-sm pl-2 pr-2">{flair}</div>       
+                        ))
+                    }   
+                </div>  
             </div>
         </li>
     )

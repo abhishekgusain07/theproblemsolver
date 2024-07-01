@@ -4,6 +4,7 @@ export interface Post {
     body: string;
     createdAt: Date;
     updatedAt: Date;
+    flairs: string[];
 }
 export interface PostWithCounts extends Post { 
     _count: {

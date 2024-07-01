@@ -2,8 +2,6 @@ import { cn } from "@/lib/utils";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 
 const LikeIcon = ({likes, userLiked}:{likes:number, userLiked: boolean}) => {
-    //log
-    console.log('user like info: ', userLiked)
     return (
         <div className={cn("flex flex-row gap-x-1 justify-center items-center")}>
             {userLiked ? (

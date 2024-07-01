@@ -10,7 +10,7 @@ export default async function UpdateForm({postId}:{postId: number}) {
     if(!post)return <div>Post not found</div>
     return (
       <Suspense fallback="...loading">
-          <UpdateFormClient postId={postId} initialTitle={post.title} initialBody={post.body}/>
+          <UpdateFormClient postId={postId} initialTitle={post.title} initialBody={post.body} initialFlairs={post.flairs}/>
         </Suspense>
       );
 }
