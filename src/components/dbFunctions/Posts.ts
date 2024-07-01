@@ -1,9 +1,15 @@
 "use server"
 
 import prisma from "@/lib/db";
-import { CommentType, PostWithCounts } from "@/lib/types/types";
+import { CommentType, Post, PostWithCounts } from "@/lib/types/types";
 import { revalidatePath } from "next/cache";
 
+
+export const getAllPost = async() => {
+  const posts: Post[] = await prisma.post.findMany()
+  if(!posts)throw new Error(`No post availaible`)
+  return posts
+}
 export const likePost = async({
     clerkUserId, 
     postId

@@ -1,9 +1,7 @@
 import prisma from "@/lib/db";
-import Link from "next/link";
-import TrashIcon from "./icons/TrashIcon";
-import UpdateIcon from "./icons/UpdateIcon";
 import SinglePost from "./SinglePost";
 import { PostWithCounts } from "@/lib/types/types";
+import SearchClientComp from "./SearchClientComp";
 const PostList = async() => {
     const posts: PostWithCounts[]= await prisma.post.findMany({
         include: {
@@ -15,8 +13,10 @@ const PostList = async() => {
             createdAt: 'desc'
         }
     })
+    console.log('reached here')
     return (
         <ul className="max-w-[700px] mx-auto flex flex-col gap-y-4">
+            <SearchClientComp />
             {posts.map((post) => (
                 <SinglePost key={post.id} post={post} />
             ))}
