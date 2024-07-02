@@ -7,8 +7,7 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-    CommandSeparator,
-    CommandShortcut,
+    CommandSeparator
   } from "@/components/ui/command"
 import { Post } from "@/lib/types/types";
 import { useEffect, useState } from "react";
