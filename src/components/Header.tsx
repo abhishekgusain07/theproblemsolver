@@ -13,6 +13,10 @@ const navLinks = [
     {
         href: "/posts",
         label: "Posts"
+    },
+    {
+        href: "/habits",
+        label: "Habits"
     }
 ]
 export interface link {
