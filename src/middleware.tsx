@@ -1,7 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const protectedRoutes = createRouteMatcher([
-    '/create-post'
+    '/create-post',
+    '/addHabit'
 ])
 export default clerkMiddleware((auth, req) => {
     if(protectedRoutes(req)){

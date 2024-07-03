@@ -60,7 +60,7 @@ export interface Habit {
     userId: number;
     createdAt: Date;
     updatedAt: Date;
-    activities: HabitActivity[];
+    activities?: HabitActivity[];
   }
   
 export interface HabitActivity {

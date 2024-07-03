@@ -1,15 +1,12 @@
 "use server"
 import prisma from "@/lib/db";
+import { postSchema } from "@/lib/schema/schema";
 import { auth, getAuth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-const postSchema = z.object({
-    title: z.string().min(5, "Title is required").max(30),
-    body: z.string().min(10, "Body is required").max(500),
-    flairs: z.string().optional(),
-});
+
 export async function createPost(formData: FormData) {
 
     // auth check to protect unauthorized person from hitting the route
@@ -24,7 +21,7 @@ export async function createPost(formData: FormData) {
 
 
     //zod validation
-    const result = postSchema.safeParse({title, body});
+    const result = postSchema.safeParse({title, body, flairs});
     
     if(!result.success) {
         console.log(result.error.issues)
