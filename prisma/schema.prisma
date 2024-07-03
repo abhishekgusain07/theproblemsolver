@@ -14,6 +14,7 @@ model User {
   name         String?
   likes        Like[]
   comments     Comment[]
+  habits       Habit[]
 }
 
 model Post {
@@ -46,4 +47,26 @@ model Comment {
   postId    Int
   user      User     @relation(fields: [userId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
+}
+
+
+model Habit {
+  id        Int            @id @default(autoincrement())
+  title     String
+  userId    Int
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  user      User           @relation(fields: [userId], references: [id])
+  activities HabitActivity[]
+}
+
+model HabitActivity {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  habitId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  habit     Habit    @relation(fields: [habitId], references: [id])
+
+  @@unique([habitId, date]) // Ensures a habit activity is tracked only once per day
 }

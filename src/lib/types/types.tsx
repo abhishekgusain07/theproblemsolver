@@ -54,6 +54,23 @@ export interface Comment {
     post?: Post; // Optional to prevent circular dependency
   }
   
+export interface Habit {
+    id?: number;
+    title: string;
+    userId: number;
+    createdAt: Date;
+    updatedAt: Date;
+    activities: HabitActivity[];
+  }
+  
+export interface HabitActivity {
+    id?: number;
+    date: Date;
+    habitId: number;
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  
 export interface User {
     id?: number;
     clerkUserId: string;
@@ -61,4 +78,5 @@ export interface User {
     name?: string;
     likes?: Like[];
     comments?: Comment[];
-}
+    habits?: Habit[];
+  }

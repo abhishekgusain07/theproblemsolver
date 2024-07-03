@@ -29,7 +29,7 @@ export async function getUserById({
 }:{
     id?: number;
     clerkUserId?: string;
-}) {
+}):Promise<User> {
         if(!id && !clerkUserId){
             throw new Error('Either id or clerkUserId must be provided')
         }
@@ -91,6 +91,20 @@ export async function updateUser({id,clerkUserId, data}:{
                     update: {
                         body: comment.body,
                     },
+                })) || []
+            },
+            habits: {
+                upsert: data.habits?.map((habit) => ({
+                    where: {
+                        id: habit.id!,
+                    },
+                    create: {
+                        title: habit.title,
+                        userId: habit.userId!,
+                    },
+                    update: {
+                        title: habit.title
+                    }
                 })) || []
             },
         },
