@@ -1,4 +1,5 @@
 "use client";
+import { link } from "@/lib/types/types";
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,10 +20,6 @@ const navLinks = [
         label: "Habits"
     }
 ]
-export interface link {
-    href: string
-    label: string
-}
 const adminLinks = {
     href: '/create-post',
     label: "Create Post"
@@ -41,7 +38,6 @@ const Header = () => {
             setUpdatedNavLinks([...navLinks, adminLinks]);
             setIsAdmin(true);
         } else {
-            setUpdatedNavLinks(navLinks);
             setIsAdmin(false)
         }
     }, []);

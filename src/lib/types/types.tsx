@@ -62,3 +62,8 @@ export interface User {
     likes?: Like[];
     comments?: Comment[];
 }
+
+export interface link {
+    href: string
+    label: string
+}
