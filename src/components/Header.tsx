@@ -38,9 +38,10 @@ const Header = () => {
             setUpdatedNavLinks([...navLinks, adminLinks]);
             setIsAdmin(true);
         } else {
+            setUpdatedNavLinks(navLinks)
             setIsAdmin(false)
         }
-    }, []);
+    }, [user]);
     return (
         <header className="flex justify-between items-center py-4 px-7 border-b">
             <Link href="/">
@@ -55,13 +56,21 @@ const Header = () => {
             <nav>
                 <ul className="flex gap-x-5 text-[14px]">
                     {
-                        updatedNavLinks.map((link) => {
+                        (user === null || user === undefined)? (updatedNavLinks.map((link) => {
                             return <li key={link.href}>
                                 <Link  className={`${pathName === link.href ? "text-zinc-900" : "text-zinc-400 "}`} href={link.href}>
                                     {link.label}
                                 </Link>
                             </li>
-                        })
+                        })) : (
+                            navLinks.map((link) => {
+                                return <li key={link.href}>
+                                    <Link  className={`${pathName === link.href ? "text-zinc-900" : "text-zinc-400 "}`} href={link.href}>
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            }) 
+                        )
                     }
                     <SignedIn>
                         <UserButton />
