@@ -44,7 +44,7 @@ const Header = () => {
             setUpdatedNavLinks(navLinks);
             setIsAdmin(false)
         }
-    }, [user]);
+    }, []);
     return (
         <header className="flex justify-between items-center py-4 px-7 border-b">
             <Link href="/">
