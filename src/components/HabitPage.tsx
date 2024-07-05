@@ -14,7 +14,7 @@ const HabitPage = ({
     
     const [habits, setHabits] = useState<Habit[]| null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const {isLoaded} = useUser()
+    const {user, isLoaded} = useUser()
     useEffect(() => {
         const fetchHabits = async() => {
             const fetchedHabits = await getHabitsByUserClerkId({clerkUserId: clerkUserId})
@@ -25,7 +25,7 @@ const HabitPage = ({
         
     }, [clerkUserId])
     
-    if(isLoading || !isLoaded )return <div>...Loading Habits</div>
+    if(isLoading || !isLoaded || !user)return <div>...Loading Habits</div>
     return (
         <div>
             Habit Page
@@ -42,9 +42,12 @@ const HabitPage = ({
                         {
                             habits.map((habit) => {
                                 return (
-                                    <div key={habit.id} className=" flex flex-row items-center justify-center hover:bg-gray-50 bg-gray-100 h-[100px] w-[100px] shadow-sm rounded-md">
-                                        {habit.title}
-                                    </div>
+                                    <Link key={habit.id} href={`/habits/${habit.id}`}>
+                                        <div key={habit.id} className=" flex flex-row items-center justify-center hover:bg-gray-50 bg-gray-100 h-[100px] w-[100px] shadow-sm rounded-md">
+                                            
+                                                {habit.title} 
+                                        </div>
+                                    </Link>
                                 )
                             })
                         }

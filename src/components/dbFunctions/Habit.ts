@@ -42,3 +42,76 @@ export const createNewHabit = async({
         throw new Error(`Failed to create new habit: ${error}`);
     }
 }
+export const getHabitById = async({habitId}:{habitId: number}):Promise<Habit> => {
+    try {
+        const habit = await prisma.habit.findUnique({
+            where: {id: habitId}
+        })
+        if(!habit) {
+            throw new Error(`There is no habit with id ${habitId}`)
+        }
+        return habit
+    } catch (error) {
+        console.log(error)
+        throw new Error(`Failed to retrieve habit with id ${habitId}`)
+    }
+}
+
+export const addHabitActivity = async({
+    habitId,
+    date
+}:{
+    habitId: number,
+    date: Date
+}) => {
+    try {
+        const existingHabitActivity = await prisma.habitActivity.findUnique({
+            where:{
+                habitId_date: {
+                    habitId,
+                    date
+                }
+            }
+        })
+        if (existingHabitActivity) {
+            console.log('Habit activity already exists for this date.');
+            return;
+        }
+
+        const newHabitActivity = await prisma.habitActivity.create({
+            data: {
+                date: date,
+                habitId: habitId,
+            },
+        });
+        console.log('Habit activity created:', newHabitActivity);
+    } catch (error) {
+        console.error('Error creating habit activity:', error);
+        throw new Error(`Error creating habit activity: ${error}`)
+    }
+}
+
+export const checkingExistingHabitActivity = async({
+    habitId,
+    date
+}:{
+    habitId: number,
+    date: Date
+}): Promise<boolean>=> {
+    try {
+        const existingHabitActivity = await prisma.habitActivity.findUnique({
+            where:{
+                habitId_date: {
+                    habitId,
+                    date
+                }
+            }
+        })
+        if (existingHabitActivity) {
+            return true
+        }else return false
+    } catch (error) {
+        console.log(`error: ${error}`)
+        return false
+    }
+}
